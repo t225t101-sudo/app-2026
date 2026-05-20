@@ -11,7 +11,18 @@
         <h1>Todo List</h1>
         <div class="input-group">
             <input type="text" id="todo-input" placeholder="新しいタスクを入力..." aria-label="新しいタスク">
+            <select id="category-select">
+                <option value="授業">授業</option>
+                <option value="プライベート">プライベート</option>
+                <option value="その他">その他</option>
+            </select>
             <button id="add-btn">追加</button>
+        </div>
+        <div class="filter-group">
+            <button class="filter-btn active" data-filter="すべて">すべて</button>
+            <button class="filter-btn" data-filter="授業">授業</button>
+            <button class="filter-btn" data-filter="プライベート">プライベート</button>
+            <button class="filter-btn" data-filter="その他">その他</button>
         </div>
         <ul id="todo-list"></ul>
     </div>
