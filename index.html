@@ -3,26 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Red Todo</title>
-    <!-- Google Fonts 導入でおしゃれ度アップ -->
+    <title>Todo</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-    <!-- クエリパラメータ v=2 を追加してキャッシュを強制回避 -->
-    <link rel="stylesheet" href="style.css?v=2">
+    <!-- CSS (query param for cache busting) -->
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
     <div class="container">
-        <h1>Red Todo</h1>
+        <h1>Todo</h1>
         <div class="input-group">
             <div class="input-row">
                 <input type="text" id="todo-input" placeholder="何をしますか？" aria-label="新しいタスク">
                 <select id="category-select">
                     <option value="授業">授業</option>
                     <option value="プライベート">プライベート</option>
-                    <option value="その他">その他</option>
                 </select>
             </div>
             <button id="add-btn">タスクを追加</button>
         </div>
+        
+        <div id="stats-container" class="stats-group">
+            <div class="stat-item">
+                <span class="stat-label">全て</span>
+                <span id="total-count" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">完了</span>
+                <span id="completed-count" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">未完了</span>
+                <span id="remaining-count" class="stat-value">0</span>
+            </div>
+        </div>
+
         <ul id="todo-list"></ul>
     </div>
     <script src="script.js"></script>
