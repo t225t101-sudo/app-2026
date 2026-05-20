@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Todo Logic ---
     const todoInput = document.getElementById('todo-input');
     const categorySelect = document.getElementById('category-select');
     const addBtn = document.getElementById('add-btn');
@@ -19,21 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const completed = todos.filter(t => t.completed).length;
         const remaining = total - completed;
 
-        totalCountEl.textContent = total;
-        completedCountEl.textContent = completed;
-        remainingCountEl.textContent = remaining;
+        if (totalCountEl) totalCountEl.textContent = total;
+        if (completedCountEl) completedCountEl.textContent = completed;
+        if (remainingCountEl) remainingCountEl.textContent = remaining;
     };
 
     const renderTodos = () => {
         todoList.innerHTML = '';
-        
-        // 完了したタスクを下に並び替える
         const sortedTodos = [...todos].sort((a, b) => a.completed - b.completed);
 
         sortedTodos.forEach((todo) => {
-            // 元の配列での実際のインデックスを取得（トグル・削除用）
             const originalIndex = todos.findIndex(t => t === todo);
-            
             const li = document.createElement('li');
             
             const span = document.createElement('span');
@@ -87,5 +84,80 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') addTodo();
     });
 
+    // --- Diary Logic ---
+    const diaryInput = document.getElementById('diary-input');
+    const saveDiaryBtn = document.getElementById('save-diary-btn');
+    const diaryList = document.getElementById('diary-list');
+
+    let diaries = JSON.parse(localStorage.getItem('diaries')) || [];
+
+    const saveDiaries = () => {
+        localStorage.setItem('diaries', JSON.stringify(diaries));
+    };
+
+    const renderDiaries = () => {
+        diaryList.innerHTML = '';
+        // 新しい順に並び替え
+        const sortedDiaries = [...diaries].reverse();
+
+        sortedDiaries.forEach((diary) => {
+            const originalIndex = diaries.findIndex(d => d === diary);
+            const card = document.createElement('div');
+            card.className = 'diary-card';
+
+            const header = document.createElement('div');
+            header.className = 'diary-header';
+
+            const dateSpan = document.createElement('span');
+            dateSpan.className = 'diary-date';
+            dateSpan.textContent = diary.date;
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-diary-btn';
+            deleteBtn.textContent = '削除';
+            deleteBtn.addEventListener('click', () => deleteDiary(originalIndex));
+
+            header.appendChild(dateSpan);
+            header.appendChild(deleteBtn);
+
+            const content = document.createElement('div');
+            content.className = 'diary-content';
+            content.textContent = diary.content;
+
+            card.appendChild(header);
+            card.appendChild(content);
+            diaryList.appendChild(card);
+        });
+    };
+
+    const saveDiary = () => {
+        const content = diaryInput.value.trim();
+        if (content) {
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            
+            diaries.push({
+                content,
+                date: dateStr
+            });
+            
+            diaryInput.value = '';
+            saveDiaries();
+            renderDiaries();
+        }
+    };
+
+    const deleteDiary = (index) => {
+        if (confirm('この日記を削除してもよろしいですか？')) {
+            diaries.splice(index, 1);
+            saveDiaries();
+            renderDiaries();
+        }
+    };
+
+    saveDiaryBtn.addEventListener('click', saveDiary);
+
+    // Initial Render
     renderTodos();
+    renderDiaries();
 });

@@ -271,3 +271,118 @@ li:hover::before {
 li {
     animation: fadeIn 0.5s ease-out backwards;
 }
+
+/* Diary Section Styles */
+.diary-section {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px dashed #ffe3e3;
+}
+
+.diary-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--accent-red);
+    font-size: 1.8rem;
+}
+
+textarea#diary-input {
+    width: 100%;
+    min-height: 120px;
+    padding: 16px 20px;
+    border: 2px solid #fff0f0;
+    border-radius: 16px;
+    background-color: var(--input-bg);
+    font-size: 1rem;
+    color: var(--text-main);
+    transition: var(--transition);
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.6;
+}
+
+textarea#diary-input:focus {
+    outline: none;
+    border-color: var(--accent-red);
+    background-color: var(--white);
+    box-shadow: 0 0 0 4px rgba(255, 75, 43, 0.1);
+}
+
+button#save-diary-btn {
+    margin-top: 10px;
+    padding: 16px;
+    background: var(--white);
+    color: var(--accent-red);
+    border: 2px solid var(--accent-red);
+    border-radius: 16px;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 1rem;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button#save-diary-btn:hover {
+    background: var(--primary-gradient);
+    color: white;
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 65, 108, 0.3);
+}
+
+.diary-card {
+    background: var(--white);
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid #fff5f5;
+    box-shadow: 0 4px 15px rgba(255, 75, 43, 0.04);
+    transition: var(--transition);
+    animation: fadeIn 0.6s ease-out backwards;
+}
+
+.diary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(255, 75, 43, 0.08);
+}
+
+.diary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.diary-date {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--accent-red);
+    background: #fff0f3;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.diary-content {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #444;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.delete-diary-btn {
+    background: transparent;
+    border: none;
+    color: #ffcccc;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.delete-diary-btn:hover {
+    color: #ff4d6d;
+}
