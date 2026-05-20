@@ -1,139 +1,193 @@
 :root {
-    --primary-color: #4a90e2;
-    --bg-color: #f4f7f6;
-    --text-color: #333;
-    --completed-color: #888;
-    --danger-color: #e74c3c;
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --text-main: #2d3436;
+    --text-sub: #636e72;
+    --white: #ffffff;
+    --input-bg: #f8f9fa;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.12);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-main);
     display: flex;
     justify-content: center;
-    padding: 2rem;
+    align-items: flex-start;
+    min-height: 100vh;
     margin: 0;
+    padding: 4rem 1rem;
 }
 
 .container {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 24px;
+    box-shadow: var(--shadow-soft);
     width: 100%;
-    max-width: 400px;
+    max-width: 480px;
+    animation: slideUp 0.6s ease-out;
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
+    margin-bottom: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.2rem;
 }
 
 .input-group {
     display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 2.5rem;
+}
+
+.input-row {
+    display: flex;
     gap: 10px;
-    margin-bottom: 2rem;
 }
 
 input[type="text"] {
     flex-grow: 1;
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 6px;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--input-bg);
+    font-size: 1rem;
+    color: var(--text-main);
+    transition: var(--transition);
+}
+
+input[type="text"]:focus {
     outline: none;
-    transition: border-color 0.3s;
+    background-color: var(--white);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
 select#category-select {
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 6px;
-    background-color: white;
+    padding: 0 14px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--input-bg);
+    font-size: 0.9rem;
     cursor: pointer;
-}
-
-input[type="text"]:focus, select#category-select:focus {
-    border-color: var(--primary-color);
+    transition: var(--transition);
 }
 
 button#add-btn {
-    padding: 10px 20px;
-    background-color: var(--primary-color);
+    padding: 14px;
+    background: var(--primary-gradient);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
 }
 
 button#add-btn:hover {
-    background-color: #357abd;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(118, 75, 162, 0.4);
+}
+
+button#add-btn:active {
+    transform: translateY(0);
 }
 
 ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 li {
-    background: #fff;
-    border-bottom: 1px solid #eee;
+    background: var(--white);
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
-    padding: 10px 0;
-    gap: 8px;
-    animation: fadeIn 0.3s ease;
+    padding: 16px;
+    gap: 12px;
+    border-radius: 16px;
+    border: 1px solid #f0f0f0;
+    transition: var(--transition);
 }
 
-li:last-child {
-    border-bottom: none;
+li:hover {
+    transform: translateX(4px);
+    border-color: #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
 .todo-text {
     flex-grow: 1;
     cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 1.05rem;
+    transition: var(--transition);
+    word-break: break-all;
 }
 
 .todo-text.completed {
     text-decoration: line-through;
-    color: var(--completed-color);
+    color: var(--text-sub);
+    opacity: 0.6;
 }
 
 .category-badge {
     font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background-color: #eee;
-    color: #666;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
     white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.category-badge.授業 { background-color: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb; }
-.category-badge.プライベート { background-color: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7; }
-.category-badge.その他 { background-color: #f5f5f5; color: #616161; border: 1px solid #e0e0e0; }
+.category-badge.授業 { background-color: #ebf4ff; color: #3182ce; }
+.category-badge.プライベート { background-color: #faf5ff; color: #805ad5; }
+.category-badge.その他 { background-color: #f7fafc; color: #4a5568; }
 
 .delete-btn {
-    background: none;
+    background: #fff5f5;
     border: none;
-    color: var(--danger-color);
+    color: #f56565;
     cursor: pointer;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: var(--transition);
 }
 
 .delete-btn:hover {
-    background-color: #fee;
+    background: #feb2b2;
+    color: #fff;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+li {
+    animation: fadeIn 0.4s ease-out backwards;
 }

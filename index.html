@@ -10,13 +10,15 @@
     <div class="container">
         <h1>Todo List</h1>
         <div class="input-group">
-            <input type="text" id="todo-input" placeholder="新しいタスクを入力..." aria-label="新しいタスク">
-            <select id="category-select">
-                <option value="授業">授業</option>
-                <option value="プライベート">プライベート</option>
-                <option value="その他">その他</option>
-            </select>
-            <button id="add-btn">追加</button>
+            <div class="input-row">
+                <input type="text" id="todo-input" placeholder="新しいタスクを入力..." aria-label="新しいタスク">
+                <select id="category-select">
+                    <option value="授業">授業</option>
+                    <option value="プライベート">プライベート</option>
+                    <option value="その他">その他</option>
+                </select>
+            </div>
+            <button id="add-btn">タスクを追加する</button>
         </div>
         <ul id="todo-list"></ul>
     </div>
