@@ -97,36 +97,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderDiaries = () => {
         diaryList.innerHTML = '';
-        // 新しい順に並び替え
-        const sortedDiaries = [...diaries].reverse();
+        
+        if (diaries.length === 0) return;
 
-        sortedDiaries.forEach((diary) => {
-            const originalIndex = diaries.findIndex(d => d === diary);
-            const card = document.createElement('div');
-            card.className = 'diary-card';
+        // 日付ごとにグループ化
+        const groups = {};
+        diaries.forEach((diary, index) => {
+            const datePart = diary.date.split(' ')[0]; // YYYY/MM/DD
+            if (!groups[datePart]) {
+                groups[datePart] = [];
+            }
+            groups[datePart].push({ ...diary, originalIndex: index });
+        });
+
+        // 日付の降順（新しい順）でグループを処理
+        const sortedDates = Object.keys(groups).sort().reverse();
+
+        sortedDates.forEach(date => {
+            const dateGroup = document.createElement('div');
+            dateGroup.className = 'date-group';
 
             const header = document.createElement('div');
-            header.className = 'diary-header';
+            header.className = 'date-group-header';
+            
+            const title = document.createElement('span');
+            title.className = 'date-group-title';
+            title.textContent = date;
+            
+            header.appendChild(title);
+            dateGroup.appendChild(header);
 
-            const dateSpan = document.createElement('span');
-            dateSpan.className = 'diary-date';
-            dateSpan.textContent = diary.date;
+            // 同じ日の中では新しい順に表示
+            const sortedEntries = groups[date].reverse();
 
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'delete-diary-btn';
-            deleteBtn.textContent = '削除';
-            deleteBtn.addEventListener('click', () => deleteDiary(originalIndex));
+            sortedEntries.forEach(diary => {
+                const card = document.createElement('div');
+                card.className = 'diary-card';
 
-            header.appendChild(dateSpan);
-            header.appendChild(deleteBtn);
+                const cardHeader = document.createElement('div');
+                cardHeader.className = 'diary-header';
 
-            const content = document.createElement('div');
-            content.className = 'diary-content';
-            content.textContent = diary.content;
+                const timeSpan = document.createElement('span');
+                timeSpan.className = 'diary-time';
+                timeSpan.textContent = diary.date.split(' ')[1]; // HH:mm
 
-            card.appendChild(header);
-            card.appendChild(content);
-            diaryList.appendChild(card);
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-diary-btn';
+                deleteBtn.textContent = '削除';
+                deleteBtn.addEventListener('click', () => deleteDiary(diary.originalIndex));
+
+                const headerLeft = document.createElement('div');
+                headerLeft.appendChild(timeSpan);
+
+                cardHeader.appendChild(headerLeft);
+                cardHeader.appendChild(deleteBtn);
+
+                const content = document.createElement('div');
+                content.className = 'diary-content';
+                content.textContent = diary.content;
+
+                card.appendChild(cardHeader);
+                card.appendChild(content);
+                dateGroup.appendChild(card);
+            });
+
+            diaryList.appendChild(dateGroup);
         });
     };
 
